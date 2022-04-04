@@ -1,0 +1,73 @@
+" vim configuration 
+
+" doumentation - imp
+" issue with plugin install? remove .vim directory and reinstall vundle
+" vundle details - https://github.com/VundleVim/Vundle.vim#quick-start
+" to install plugin - :PluginInstall
+" to split - use :sp or :sp <file_name>
+" file_name will appear with auto complete tabs
+" to create window tabs - :tabe <file_name> (auto completion is enabled)
+" to create a empty tab - :tabnew
+" to navigate between tabs - gt or :tabn
+" to hop between splits/nerdtree - control + ww
+" shift + v for visual mode, needed for folding
+" to open fold - zo
+" to close fold - zc/ zf(for manual method only) 
+
+" generic updates
+set number                    " set line number
+set expandtab                 " converting tabs into spaces
+set t_Co=256
+set autoindent                " auto indent
+set noswapfile                
+set hlsearch                  " highlight search
+:syntax on                    " enable syntax highlight
+set splitbelow                " enable split below
+set splitright                
+set nofoldenable              " set auto folding 
+
+
+
+"plugin specifics, below
+filetype off                  " required by vundle
+set nocompatible              " required by vundle
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Auto complete of brakets
+Plugin 'jiangmiao/auto-pairs'
+
+" File explorer
+Plugin 'preservim/nerdtree'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required by vundle
+
+filetype plugin indent on    " required by vundle
+
+
+
+" setting leader
+let mapleader = ','
+
+" Toggle options for explorer
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+" python specific
+fu Python_formats()
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set textwidth=79
+    set expandtab
+    set autoindent
+    set foldmethod=indent
+    set fileformat=unix
+endf
+au BufNewFile,BufRead *.py  call Python_formats()
+
