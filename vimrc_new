@@ -1,0 +1,67 @@
+" generic updates
+set number                    " set line number
+set expandtab                 " converting tabs into spaces
+set t_Co=256
+set autoindent                " auto indent
+set noswapfile                
+set hlsearch                  " highlight search
+:syntax on                    " enable syntax highlight
+set splitbelow                " enable split below
+set splitright                
+set nofoldenable              " set auto folding 
+set signcolumn=no
+
+
+call plug#begin('~/.vim/plugged')
+
+" Coc plugin
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" File explorer
+Plug 'preservim/nerdtree'
+
+" Bracket auto complete plug
+Plug 'jiangmiao/auto-pairs'
+
+" Rust specific
+Plug 'rust-lang/rust.vim'
+
+call plug#end()
+
+
+" For file explorer key
+let mapleader = ','
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+" For hover recommendation
+nnoremap <silent> K :call ShowDocumentation()<CR>
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" use <tab> to trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+
+
+" Go to definition 
+nmap <silent> D <Plug>(coc-definition)
+
+" Go to definition
+" nmap <silent> gy <Plug>(coc-type-definition)
+" Go to implementation
+" nmap <silent> gi <Plug>(coc-implementation)
+
+" Go to references 
+nmap <silent> R <Plug>(coc-references)
